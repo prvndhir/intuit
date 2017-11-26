@@ -10,12 +10,12 @@ function printlog {
   printf "$(TZ=":America/Los_Angeles" date) : ${1}\n"
 }
 function check_dir {
-    [[ ! -d ${1} ]] &&  printlog "#### Aborted ####\n ${1} is not there." ; exit 1 ;
+    [[ ! -d ${1} ]] && { printlog "#### Aborted ####\n ${1} is not there." ; exit 1 ; }
     printlog "${1} is there."
 }
 
 function check_file {
-    [[ ! -f ${1} ]] && printlog "#### Aborted ####\n ${file} is not there." ;  exit 1
+    [[ ! -f ${1} ]] && { printlog "#### Aborted ####\n ${file} is not there." ;  exit 1 }
     printlog "${1} is there."
 }
 
