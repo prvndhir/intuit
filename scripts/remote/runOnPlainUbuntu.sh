@@ -20,6 +20,26 @@ function check_file {
     fi
 }
 
+function copy_file {
+    fromFile="${1}"
+    toFile="${2}"
+    printlog "Copying ${fromFile} to ${toFile}...."
+    check_file ${fromFile}
+    echo "cp ${fromFile} ${toFile}"
+    sudo cp ${fromFile} ${toFile}
+    check_file ${toFile}
+    printlog "Successfully copied ${fromFile} to ${toFile}."
+}
+
+function backup_file {
+    local file="${1}"
+    if [[ ! -f "${file}.orig" ]] ; then
+      copy_file "${file}" "${file}.orig"
+    else
+      printlog "File ${file} is already there, I am not overwriting."
+    fi
+}
+
 function install_docker {
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -38,9 +58,11 @@ function install_docker {
 # Install tomcat from gz file
 # Assumes gz file to be present in archive on the local machine
 
-function configure_and_run_tomcat {
+function configure_tomcat {
     CATALINA_HOME="${tomcat_dir}"
     HUDSON_HOME="${HOME}/hudson"
+    backup_file "${HOME}/intuit/conf/tomcat/server.xml"
+    copy_file "${tomcat_dir}/conf/server.xml" "${HOME}/intuit/conf/tomcat/server.xml"
 }
 #
 ## Install java from gz file
@@ -81,4 +103,5 @@ function expand_archive {
 }
 
 expand_archive
+configure_tomcat
 
