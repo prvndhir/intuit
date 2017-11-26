@@ -104,9 +104,8 @@ function expand_archive {
     cp ${HOME}/archive/jenkins.war ${tomcat_dir}/webapps
     printlog "Done copying APP war."
     check_file "${HOME}/archive/jdk-7u79-linux-i586.tar.gz"
-    sudo cd /opt/
     printlog "Installing java from archive..."
-    sudo tar -xvf ${HOME}/archive/jdk-7u79-linux-i586.tar.gz >/dev/null
+    cd /opt/; sudo tar -xvf ${HOME}/archive/jdk-7u79-linux-i586.tar.gz >/dev/null
     check_dir "/opt/jdk1.7.0_79"
     sudo chown -R root:root /opt/jdk1.7.0_79/
     printlog "Done installing java from archive."
