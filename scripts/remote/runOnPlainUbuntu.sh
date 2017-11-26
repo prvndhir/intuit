@@ -59,8 +59,9 @@ function install_docker {
 function configure_tomcat {
     CATALINA_HOME="${tomcat_dir}"
     HUDSON_HOME="${HOME}/hudson"
-    backup_file "${HOME}/intuit/conf/tomcat/server.xml"
+    backup_file "${tomcat_dir}/conf/server.xml"
     copy_file "${HOME}/intuit/conf/tomcat/server.xml" "${tomcat_dir}/conf/server.xml"
+    printlog "Run >  sh \${HOME}/intuit/scripts/tomcat/tomcat_start.sh"
 }
 #
 ## Install java from gz file
