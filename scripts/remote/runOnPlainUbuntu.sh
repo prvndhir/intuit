@@ -3,7 +3,6 @@ archive="${HOME}/archive.tar"
 tomcat_dir="${HOME}/tomcat/apache-tomcat-7.0.82"
 app_scripts="${HOME}/app_start_up_scripts"
 HUDSON_HOME="${HOME}/hudson"
-mkdir -p "${app_start_up_scripts}"
 mkdir -p "${HUDSON_HOME}"
 
 function printlog {
