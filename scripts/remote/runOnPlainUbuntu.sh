@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-archive="$HOME/archive.tar"
-tomcat_dir="$HOME/tomcat/apache-tomcat-7.0.82"
-app_scripts="$HOME/app_start_up_scripts"
+archive="${HOME}/archive.tar"
+tomcat_dir="${HOME}/tomcat/apache-tomcat-7.0.82"
+app_scripts="${HOME}/app_start_up_scripts"
 HUDSON_HOME="${HOME}/hudson"
 mkdir -p "${app_start_up_scripts}"
 mkdir -p "${HUDSON_HOME}"
@@ -91,15 +91,26 @@ function configure_tomcat {
 #}
 function expand_archive {
     check_file "${archive}"
-    cd ${HOME};tar -xvf ${archive}
-    check_file "$HOME/archive/apache-tomcat-7.0.82.tar.gz"
-    mkdir -p $HOME/tomcat;cd $HOME/tomcat
-    tar -xvf $HOME/archive/apache-tomcat-7.0.82.tar.gz
-    check_file "$HOME/archive/jenkins.war"
-    cp $HOME/archive/jenkins.war ${tomcat_dir}/webapps
-    check_file "$HOME/archive/jdk-7u79-linux-i586.tar.gz"
+    printlog "Please wait, expanding the archive(may take up to 2 minutes)..."
+    cd ${HOME};tar -xvf ${archive} >/dev/null
+    check_file "${HOME}/archive/apache-tomcat-7.0.82.tar.gz"
+    mkdir -p ${HOME}/tomcat;cd ${HOME}/tomcat
+    printlog "Expanding the tomcat archive..."
+    tar -xvf ${HOME}/archive/apache-tomcat-7.0.82.tar.gz >/dev/null
+    check_file "${tomcat_dir}"
+    check_file "${tomcat_dir}/webapps"
+    printlog "Done expanding the tomcat archive."
+    check_file "${HOME}/archive/jenkins.war"
+    printlog "Copying APP war..."
+    cp ${HOME}/archive/jenkins.war ${tomcat_dir}/webapps
+    printlog "Done copying APP war."
+    check_file "${HOME}/archive/jdk-7u79-linux-i586.tar.gz"
     mkdir -p ${HOME}/java;cd ${HOME}/java
-    tar -xvf $HOME/archive/jdk-7u79-linux-i586.tar.gz
+    printlog "Installing java from archive..."
+    tar -xvf ${HOME}/archive/jdk-7u79-linux-i586.tar.gz >/dev/null
+    check_file "${HOME}/java/jdk1.7.0_79"
+    printlog "Done installing java from archive."
+    printlog "Done expanding the archive."
 }
 
 expand_archive
