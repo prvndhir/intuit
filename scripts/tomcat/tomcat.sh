@@ -8,9 +8,9 @@ if [ -z $CATALINA_HOME ]; then
         exho "PATH=$PATH"
         echo "CATALINA_OPTS=$CATALINA_OPTS"
 fi
-if [[ "${1}" = "start" ]] ; then
+if [ "${1}" = "start" ]; then
     $CATALINA_HOME/bin/startup.sh -Dproduction=false
-elif [[ "${1}" = "stop" ]] ; then
+elif [ "${1}" = "stop" ] ; then
     ps -ef | grep -v grep | grep -q apache-tomcat
     OUT=$?
     if [ $OUT -ne 0 ];then
