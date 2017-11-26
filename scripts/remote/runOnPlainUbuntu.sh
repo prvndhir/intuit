@@ -88,7 +88,7 @@ function configure_tomcat {
 #
 #}
 function expand_archive {
-    check_file "${archive}1"
+    check_file "${archive}"
     printlog "Please wait, expanding the archive(may take up to 2 minutes)..."
     cd ${HOME};tar -xvf ${archive} >/dev/null
     check_file "${HOME}/archive/apache-tomcat-7.0.82.tar.gz"
