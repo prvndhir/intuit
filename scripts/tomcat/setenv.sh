@@ -1,4 +1,5 @@
 #!/bin/sh
+##set env for catalina
 JAVA_HOME="${HOME}/java/jdk1.7.0_79"
 CATALINA_HOME="${HOME}/tomcat/apache-tomcat-7.0.82"
 HUDSON_HOME="${HOME}/hudson"
