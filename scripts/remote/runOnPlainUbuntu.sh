@@ -5,6 +5,21 @@ app_scripts="$HOME/app_start_up_scripts"
 HUDSON_HOME="${HOME}/hudson"
 mkdir -p "${app_start_up_scripts}"
 mkdir -p "${HUDSON_HOME}"
+
+function printlog {
+  printf "$(TZ=":America/Los_Angeles" date) : ${1}\n"
+}
+
+function check_file {
+    local file="${1}"
+    if [[ ! -f ${file} ]] ; then
+      printlog "#### Aborted ####\n File ${file} is not there."
+      exit 1
+    else
+      printlog "File ${file} is there."
+    fi
+}
+
 function install_docker {
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -53,29 +68,17 @@ function configure_and_run_tomcat {
 #
 #}
 function expand_archive {
-    mkdir -p $HOME/tomcat
+    check_file "${archive}"
     cd ${HOME};tar -xvf ${archive}
+    check_file "$HOME/archive/apache-tomcat-7.0.82.tar.gz"
     mkdir -p $HOME/tomcat;cd $HOME/tomcat
     tar -xvf $HOME/archive/apache-tomcat-7.0.82.tar.gz
+    check_file "$HOME/archive/jenkins.war"
     cp $HOME/archive/jenkins.war ${tomcat_dir}/webapps
+    check_file "$HOME/archive/jdk-7u79-linux-i586.tar.gz"
     mkdir -p ${HOME}/java;cd ${HOME}/java
     tar -xvf $HOME/archive/jdk-7u79-linux-i586.tar.gz
 }
-generate_set_env(){
-    local filepath="$1"
-    local script=$(cat <<-EOF
-#!/usr/bin/env bash
-JAVA_HOME=/home/ubuntu/java/jdk1.7.0_79
-CATALINA_HOME=${tomcat_dir}
-HUDSON_HOME=${HUDSON_HOME}
-CATALINA_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=8111 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false"
-export JAVA_HOME CATALINA_HOME PATH HUDSON_HOME CLASSPATH CATALINA_OPTS
-export JPDA_ADDRESS=8000
-export JPDA_TRANSPORT=dt_socket
-EOF
-)
-    echo "$script" > ${app_scripts}/setenv.sh
 
-}
 expand_archive
 

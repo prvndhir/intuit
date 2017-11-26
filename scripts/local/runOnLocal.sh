@@ -10,3 +10,5 @@ cd ${HOME}
 tar -cvf ${archive_tar} ${archive}
 scp -r -o StrictHostKeyChecking=no -i ${HOME}/keys/temp_key_my_aws.pem ${archive_tar} ubuntu@${aws_ip}:${archive_dest}
 #ssh -i ${HOME}/keys/temp_key_my_aws.pem ubuntu@${aws_ip} "tar -xvf ${archive_dest}/${archive}.tar"
+#ssh -i ${HOME}/keys/temp_key_my_aws.pem ubuntu@52.26.81.51
+#cd ${HOME};git clone git@github.com:prvndhir/intuit.git;cd intuit
