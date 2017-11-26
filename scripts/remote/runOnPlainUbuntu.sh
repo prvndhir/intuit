@@ -9,15 +9,14 @@ mkdir -p "${HUDSON_HOME}"
 function printlog {
   printf "$(TZ=":America/Los_Angeles" date) : ${1}\n"
 }
+function check_dir {
+    [[ ! -d ${1} ]] &&  printlog "#### Aborted ####\n ${1} is not there." ; exit 1 ;
+    printlog "${1} is there."
+}
 
 function check_file {
-    local file="${1}"
-    if [[ ! -f ${file} ]] ; then
-      printlog "#### Aborted ####\n File ${file} is not there."
-      exit 1
-    else
-      printlog "File ${file} is there."
-    fi
+    [[ ! -f ${1} ]] && printlog "#### Aborted ####\n ${file} is not there." ;  exit 1
+    printlog "${1} is there."
 }
 
 function copy_file {
@@ -90,15 +89,15 @@ function configure_tomcat {
 #
 #}
 function expand_archive {
-    check_file "${archive}"
+    check_file "${archive}1"
     printlog "Please wait, expanding the archive(may take up to 2 minutes)..."
     cd ${HOME};tar -xvf ${archive} >/dev/null
     check_file "${HOME}/archive/apache-tomcat-7.0.82.tar.gz"
     mkdir -p ${HOME}/tomcat;cd ${HOME}/tomcat
     printlog "Expanding the tomcat archive..."
     tar -xvf ${HOME}/archive/apache-tomcat-7.0.82.tar.gz >/dev/null
-    check_file "${tomcat_dir}"
-    check_file "${tomcat_dir}/webapps"
+    check_dir "${tomcat_dir}"
+    check_dir "${tomcat_dir}/webapps"
     printlog "Done expanding the tomcat archive."
     check_file "${HOME}/archive/jenkins.war"
     printlog "Copying APP war..."
@@ -108,7 +107,7 @@ function expand_archive {
     mkdir -p ${HOME}/java;cd ${HOME}/java
     printlog "Installing java from archive..."
     tar -xvf ${HOME}/archive/jdk-7u79-linux-i586.tar.gz >/dev/null
-    check_file "${HOME}/java/jdk1.7.0_79"
+    check_dir "${HOME}/java/jdk1.7.0_79"
     printlog "Done installing java from archive."
     printlog "Done expanding the archive."
 }
