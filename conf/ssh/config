@@ -2,3 +2,5 @@ Host github.com
         HostName github.com
         User git
         IdentityFile ~/keys/temp_key_my_aws.pem
+        StrictHostKeyChecking no
+        UserKnownHostsFile /dev/null
