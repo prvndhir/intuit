@@ -1,12 +1,12 @@
 #!/bin/sh
 SCRIPTS_DIR=`dirname $0`
-if [ -z $CATALINA_HOME ]; then
+#if [ -z $CATALINA_HOME ]; then
         echo "CATALINA_HOME is not set"
         echo "Executing {SCRIPTS_DIR}/setenv.sh"
         . ${HOME}/intuit/scripts/tomcat/setenv.sh
         echo "The following environment variables are set:"
-        echo "JAVA_HOME=$JAVA_HOME CATALINA_HOME=$CATALINA_HOME ANT_HOME=$ANT_HOME PATH=$PATH"
-fi
+        echo "JAVA_HOME=$JAVA_HOME CATALINA_HOME=$CATALINA_HOME PATH=$PATH"
+#fi
 
 ps -ef | grep -v grep | grep -q apache-tomcat
 OUT=$?
