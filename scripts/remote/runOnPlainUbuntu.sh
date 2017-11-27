@@ -4,6 +4,7 @@ tomcat_dir="${HOME}/tomcat/apache-tomcat-7.0.82"
 app_scripts="${HOME}/app_start_up_scripts"
 HUDSON_HOME="${HOME}/hudson"
 mkdir -p "${HUDSON_HOME}"
+jre="jdk-7u79-linux-i586.tar.gz"
 
 function printlog {
   printf "$(TZ=":America/Los_Angeles" date) : ${1}\n"
@@ -105,9 +106,12 @@ function expand_archive {
     printlog "Done copying APP war."
     check_file "${HOME}/archive/jdk-7u79-linux-i586.tar.gz"
     printlog "Installing java from archive..."
-    cd /opt/; sudo tar -xvf ${HOME}/archive/jdk-7u79-linux-i586.tar.gz >/dev/null
-    check_dir "/opt/jdk1.7.0_79"
-    sudo chown -R root:root /opt/jdk1.7.0_79/
+    cd ${HOME}/java; tar -xvf ${HOME}/archive/jdk-7u79-linux-i586.tar.gz >/dev/null
+    check_dir "${HOME}/java/jdk1.7.0_79"
+    check_file "${HOME}/archive/jre-7u79-linux-i586.tar.gz"
+    printlog "Installing jre from archive..."
+    cd ${HOME}/java; tar -xvf ${HOME}/archive/jre-7u79-linux-i586.tar.gz >/dev/null
+    check_dir "${HOME}/java/jre1.7.0_79"
     printlog "Done installing java from archive."
     printlog "Done expanding the archive."
 }
