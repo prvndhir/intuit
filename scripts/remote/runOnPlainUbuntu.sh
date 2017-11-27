@@ -122,4 +122,4 @@ function expand_archive {
 expand_archive
 install_java
 configure_tomcat
-install_nginx
+install_nginx >/dev/null
