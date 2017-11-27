@@ -62,7 +62,7 @@ function configure_tomcat {
     HUDSON_HOME="${HOME}/hudson"
     backup_file "${tomcat_dir}/conf/server.xml"
     copy_file "${HOME}/intuit/conf/tomcat/server.xml" "${tomcat_dir}/conf/server.xml"
-    printlog "Run >  sh \${HOME}/intuit/scripts/tomcat/tomcat_start.sh"
+    printlog "Run >  sh \${HOME}/intuit/scripts/tomcat/tomcat.sh start"
 }
 #
 ## Install java from gz file
