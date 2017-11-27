@@ -72,9 +72,14 @@ function configure_tomcat {
 ## Install java from gz file
 ## Assumes gz file to be present in archive on the local machine
 ##
-#function install_java {
-#
-#}
+function install_java {
+    sudo mkdir /opt/jdk
+    sudo tar -zxf ${HOME}/archive/jdk-7u79-linux-i586.tar.gz -C /opt/jdk
+    sudo update-alternatives --install /usr/bin/java java /opt/jdk/jdk1.7.0_79/bin/java 100
+    sudo update-alternatives --install /usr/bin/javac javac /opt/jdk/jdk1.7.0_79/bin/javac 100
+    local version=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}')
+    if [[ "1.7.0_79" != ${version} ]] ; then printlog "Java version=${version} is different from expected 1.7.0_79" ; exit 1 ; fi
+}
 ## Configures tomcat and dd to enable monitoring
 #function configure_tomcat_for_dd_monitoring {
 #
@@ -122,5 +127,6 @@ function expand_archive {
 }
 
 expand_archive
+install_java
 configure_tomcat
 install_nginx
