@@ -50,9 +50,13 @@ function install_docker {
     su - ${USER}
 }
 
-#function install_nginx {
-#
-#}
+function install_nginx {
+    sudo apt-get -qqy update
+    sudo apt-get -qqy install nginx
+    sudo ufw allow 'Nginx HTTP'
+    sudo ufw status
+    systemctl status nginx
+}
 #
 # Install tomcat from gz file
 # Assumes gz file to be present in archive on the local machine
@@ -75,7 +79,7 @@ function configure_tomcat {
 #function configure_tomcat_for_dd_monitoring {
 #
 #}
-## Configures nginx and dd to enable monitoring
+# Configures nginx and dd to enable monitoring
 #function configure_nginx_for_dd_monitoring {
 #
 #}
@@ -104,13 +108,14 @@ function expand_archive {
     printlog "Copying APP war..."
     cp ${HOME}/archive/jenkins.war ${tomcat_dir}/webapps
     printlog "Done copying APP war."
+    mkdir -p ${HOME}/java;cd ${HOME}/java
     check_file "${HOME}/archive/jdk-7u79-linux-i586.tar.gz"
     printlog "Installing java from archive..."
-    cd ${HOME}/java; tar -xvf ${HOME}/archive/jdk-7u79-linux-i586.tar.gz >/dev/null
+    tar -xvf ${HOME}/archive/jdk-7u79-linux-i586.tar.gz >/dev/null
     check_dir "${HOME}/java/jdk1.7.0_79"
     check_file "${HOME}/archive/jre-7u79-linux-i586.tar.gz"
     printlog "Installing jre from archive..."
-    cd ${HOME}/java; tar -xvf ${HOME}/archive/jre-7u79-linux-i586.tar.gz >/dev/null
+    tar -xvf ${HOME}/archive/jre-7u79-linux-i586.tar.gz >/dev/null
     check_dir "${HOME}/java/jre1.7.0_79"
     printlog "Done installing java from archive."
     printlog "Done expanding the archive."
@@ -118,3 +123,4 @@ function expand_archive {
 
 expand_archive
 configure_tomcat
+install_nginx
