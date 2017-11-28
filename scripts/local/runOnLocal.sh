@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-aws_ip="52.41.74.26"
+aws_ip="52.24.250.89"
 #aws_ip="${1}"
 archive="archive"
 archive_src="${HOME}/archive"
