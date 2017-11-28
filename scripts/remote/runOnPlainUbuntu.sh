@@ -5,7 +5,7 @@ tomcat_dir="${HOME_DIR}/tomcat/apache-tomcat-7.0.82"
 app_scripts="${HOME_DIR}/app_start_up_scripts"
 HUDSON_HOME="${HOME_DIR}/hudson"
 mkdir -p "${HUDSON_HOME}"
-jre="jdk-7u79-linux-i586.tar.gz"
+jre="jdk-7u79-linux-x64.tar.gz"
 
 function printlog {
   printf "$(TZ=":America/Los_Angeles" date) : ${1}\n"
@@ -87,7 +87,7 @@ function configure_tomcat {
 function install_java {
     check_file "${HOME_DIR}/archive/jdk-7u79-linux-x64.tar.gz"
     printlog "Installing java from archive..."
-    sudo mkdir /opt/jdk;sudo tar -zxf ${HOME_DIR}/archive/jdk-7u79-linux-i586.tar.gz -C /opt/jdk  >/dev/null
+    sudo mkdir /opt/jdk;sudo tar -zxf ${HOME_DIR}/archive/jdk-7u79-linux-x64.tar.gz -C /opt/jdk  >/dev/null
     check_dir "/opt/jdk/jdk1.7.0_79"
     sudo update-alternatives --install /usr/bin/java java /opt/jdk/jdk1.7.0_79/bin/java 100
     sudo update-alternatives --install /usr/bin/javac javac /opt/jdk/jdk1.7.0_79/bin/javac 100
