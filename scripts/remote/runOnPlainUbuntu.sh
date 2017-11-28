@@ -112,9 +112,9 @@ function expand_archive {
     check_dir "${tomcat_dir}"
     check_dir "${tomcat_dir}/webapps"
     printlog "Done expanding the tomcat archive."
-    check_file "${HOME}/archive/jenkins.war"
+    check_file "${HOME}/archive/sample.war"
     printlog "Copying APP war..."
-    cp ${HOME}/archive/jenkins.war ${tomcat_dir}/webapps
+    copy_file "${HOME}/archive/sample.war" "${tomcat_dir}/webapps"
     printlog "Done copying APP war."
     printlog "Done expanding the archive."
 }
