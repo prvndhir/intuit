@@ -1,7 +1,7 @@
 server {
   listen          80;
   server_name     yourdomain.com;
-  root            /home/ubuntu/tomcat/apache-tomcat-7.0.82/webapps/jenkins;
+  root            /home/ubuntu/tomcat/apache-tomcat-7.0.82/webapps/sample;
 
   proxy_cache one;
 
