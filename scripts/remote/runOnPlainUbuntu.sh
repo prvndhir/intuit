@@ -59,6 +59,7 @@ function install_nginx {
     systemctl status nginx
     backup_file "/etc/nginx/sites-enabled/default"
     copy_file "${HOME_DIR}/intuit/conf/nginx/default" "/etc/nginx/sites-enabled/default"
+    nginx -s reload
 }
 #
 # Install tomcat from gz file
@@ -116,7 +117,7 @@ function expand_archive {
     printlog "Done expanding the tomcat archive."
     check_file "${HOME_DIR}/archive/sample.war"
     printlog "Copying APP war..."
-    copy_file "${HOME_DIR}/archive/sample.war" "${tomcat_dir}/webapps"
+    copy_file "${HOME_DIR}/archive/sample.war" "${tomcat_dir}/webapps/sample.war"
     printlog "Done copying APP war."
     printlog "Done expanding the archive."
 }
