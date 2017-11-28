@@ -53,10 +53,19 @@ function install_docker {
 
 function install_nginx {
     sudo apt-get -qqy update
-    sudo apt-get -qqy install nginx
+    sudo apt-get -qqy install ufw nginx
+    sudo ufw default deny incoming
+    sudo ufw default allow outgoing
+    sudo ufw allow ssh
+    sudo ufw allow 22
+    sudo ufw enable
+    sudo ufw allow 80
+    sudo ufw allow 443
+    sudo ufw allow 9000
     sudo ufw allow 'Nginx HTTP'
+    sudo ufw allow 'OpenSSH'
     sudo ufw status
-    systemctl status nginx
+    sudo systemctl status nginx
     backup_file "/etc/nginx/sites-enabled/default"
     copy_file "${HOME_DIR}/intuit/conf/nginx/default" "/etc/nginx/sites-enabled/default"
     nginx -s reload
@@ -76,7 +85,7 @@ function configure_tomcat {
 ## Assumes gz file to be present in archive on the local machine
 ##
 function install_java {
-    check_file "${HOME_DIR}/archive/jdk-7u79-linux-i586.tar.gz"
+    check_file "${HOME_DIR}/archive/jdk-7u79-linux-x64.tar.gz"
     printlog "Installing java from archive..."
     sudo mkdir /opt/jdk;sudo tar -zxf ${HOME_DIR}/archive/jdk-7u79-linux-i586.tar.gz -C /opt/jdk  >/dev/null
     check_dir "/opt/jdk/jdk1.7.0_79"
@@ -123,6 +132,6 @@ function expand_archive {
 }
 
 expand_archive
-#install_java
+install_java
 configure_tomcat
 #install_nginx >/dev/null
