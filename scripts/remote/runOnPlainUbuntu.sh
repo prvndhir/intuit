@@ -51,24 +51,31 @@ function install_docker {
     su - ${USER}
 }
 
-function install_nginx {
+function install_ufw {
     sudo apt-get -qqy update
-    sudo apt-get -qqy install ufw nginx
+    sudo apt-get -qqy install ufw
     sudo ufw default deny incoming
     sudo ufw default allow outgoing
     sudo ufw allow ssh
     sudo ufw allow 22
-    sudo ufw enable
     sudo ufw allow 80
     sudo ufw allow 443
     sudo ufw allow 9000
     sudo ufw allow 'Nginx HTTP'
     sudo ufw allow 'OpenSSH'
     sudo ufw status
+}
+function install_nginx {
+    sudo apt-get -qqy update
+    sudo apt-get -qqy install nginx
+    sudo ufw allow 'Nginx HTTP'
+    sudo ufw allow 'OpenSSH'
+    sudo ufw status
     sudo systemctl status nginx
-    backup_file "/etc/nginx/sites-enabled/default"
-    copy_file "${HOME_DIR}/intuit/conf/nginx/default" "/etc/nginx/sites-enabled/default"
-    nginx -s reload
+    sudo cp "/etc/nginx/sites-enabled/default" /etc/nginx/sites-enabled/default.orig
+    sudo cp "${HOME_DIR}/intuit/conf/nginx/default" "/etc/nginx/sites-enabled/default"
+    sudo nginx -t
+    sudo nginx -s reload
 }
 #
 # Install tomcat from gz file
@@ -78,7 +85,7 @@ function configure_tomcat {
     CATALINA_HOME="${tomcat_dir}"
     backup_file "${tomcat_dir}/conf/server.xml"
     copy_file "${HOME_DIR}/intuit/conf/tomcat/server.xml" "${tomcat_dir}/conf/server.xml"
-    printlog "Run >  sh \${HOME_DIR}/intuit/scripts/tomcat/tomcat.sh start"
+    printlog "Run >  sh \${HOME}/intuit/scripts/tomcat/tomcat.sh start"
 }
 #
 ## Install java from gz file
