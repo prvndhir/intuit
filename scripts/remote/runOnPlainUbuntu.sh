@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-archive="${HOME}/archive.tar"
-tomcat_dir="${HOME}/tomcat/apache-tomcat-7.0.82"
-app_scripts="${HOME}/app_start_up_scripts"
-HUDSON_HOME="${HOME}/hudson"
+HOME_DIR="${HOME}"
+archive="${HOME_DIR}/archive.tar"
+tomcat_dir="${HOME_DIR}/tomcat/apache-tomcat-7.0.82"
+app_scripts="${HOME_DIR}/app_start_up_scripts"
+HUDSON_HOME="${HOME_DIR}/hudson"
 mkdir -p "${HUDSON_HOME}"
 jre="jdk-7u79-linux-i586.tar.gz"
 
@@ -56,6 +57,8 @@ function install_nginx {
     sudo ufw allow 'Nginx HTTP'
     sudo ufw status
     systemctl status nginx
+    backup_file "/etc/nginx/sites-enabled/default"
+    copy_file "${HOME_DIR}/intuit/conf/nginx/default" "/etc/nginx/sites-enabled/default"
 }
 #
 # Install tomcat from gz file
@@ -63,19 +66,18 @@ function install_nginx {
 
 function configure_tomcat {
     CATALINA_HOME="${tomcat_dir}"
-    HUDSON_HOME="${HOME}/hudson"
     backup_file "${tomcat_dir}/conf/server.xml"
-    copy_file "${HOME}/intuit/conf/tomcat/server.xml" "${tomcat_dir}/conf/server.xml"
-    printlog "Run >  sh \${HOME}/intuit/scripts/tomcat/tomcat.sh start"
+    copy_file "${HOME_DIR}/intuit/conf/tomcat/server.xml" "${tomcat_dir}/conf/server.xml"
+    printlog "Run >  sh \${HOME_DIR}/intuit/scripts/tomcat/tomcat.sh start"
 }
 #
 ## Install java from gz file
 ## Assumes gz file to be present in archive on the local machine
 ##
 function install_java {
-    check_file "${HOME}/archive/jdk-7u79-linux-i586.tar.gz"
+    check_file "${HOME_DIR}/archive/jdk-7u79-linux-i586.tar.gz"
     printlog "Installing java from archive..."
-    sudo mkdir /opt/jdk;sudo tar -zxf ${HOME}/archive/jdk-7u79-linux-i586.tar.gz -C /opt/jdk  >/dev/null
+    sudo mkdir /opt/jdk;sudo tar -zxf ${HOME_DIR}/archive/jdk-7u79-linux-i586.tar.gz -C /opt/jdk  >/dev/null
     check_dir "/opt/jdk/jdk1.7.0_79"
     sudo update-alternatives --install /usr/bin/java java /opt/jdk/jdk1.7.0_79/bin/java 100
     sudo update-alternatives --install /usr/bin/javac javac /opt/jdk/jdk1.7.0_79/bin/javac 100
@@ -104,17 +106,17 @@ function install_java {
 function expand_archive {
     check_file "${archive}"
     printlog "Please wait, expanding the archive(may take up to 2 minutes)..."
-    cd ${HOME};tar -xvf ${archive} >/dev/null
-    check_file "${HOME}/archive/apache-tomcat-7.0.82.tar.gz"
-    mkdir -p ${HOME}/tomcat;cd ${HOME}/tomcat
+    cd ${HOME_DIR};tar -xvf ${archive} >/dev/null
+    check_file "${HOME_DIR}/archive/apache-tomcat-7.0.82.tar.gz"
+    mkdir -p ${HOME_DIR}/tomcat;cd ${HOME_DIR}/tomcat
     printlog "Expanding the tomcat archive..."
-    tar -xvf ${HOME}/archive/apache-tomcat-7.0.82.tar.gz >/dev/null
+    tar -xvf ${HOME_DIR}/archive/apache-tomcat-7.0.82.tar.gz >/dev/null
     check_dir "${tomcat_dir}"
     check_dir "${tomcat_dir}/webapps"
     printlog "Done expanding the tomcat archive."
-    check_file "${HOME}/archive/sample.war"
+    check_file "${HOME_DIR}/archive/sample.war"
     printlog "Copying APP war..."
-    copy_file "${HOME}/archive/sample.war" "${tomcat_dir}/webapps"
+    copy_file "${HOME_DIR}/archive/sample.war" "${tomcat_dir}/webapps"
     printlog "Done copying APP war."
     printlog "Done expanding the archive."
 }
