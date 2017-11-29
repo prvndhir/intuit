@@ -8,3 +8,13 @@ terraform apply -input=false tfplan
 Destruction
 ------------------------------------
 terraform destroy -input=false
+
+------------------------------------
+Docker
+------------------------------------
+docker build --rm -t prvndhir/sampleapp:latest .
+docker run --name sampleapp -d 2b27d32a12b4 -p 9000:9000 prvndhir/sampleapp:latest
+
+------------------------------------
+DCOS
+------------------------------------
