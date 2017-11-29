@@ -1,0 +1,38 @@
+{
+  "id": "/netsense-pdhir/sampleapp",
+  "instances": 1,
+  "cpus": 0.2,
+  "mem": 1096,
+
+  "container": {
+    "docker": {
+      "image": "prvndhir/sampleapp:latest",
+      "forcePullImage": true,
+      "privileged": false,
+      "portMappings": [
+        {
+          "containerPort": 8080,
+          "protocol": "tcp"
+        }
+      ],
+      "network": "BRIDGE"
+    }
+  },
+  "labels": {
+    "HAPROXY_GROUP": "external",
+    "HAPROXY_0_REDIRECT_TO_HTTPS": "true",
+    "HAPROXY_0_STICKY": "true",
+    "HAPROXY_0_MODE": "HTTP",
+    "HAPROXY_0_VHOST": "netsense-pdhir.sensity.com"
+  },
+  "healthChecks": [
+    {
+      "protocol": "TCP",
+      "gracePeriodSeconds": 0,
+      "intervalSeconds": 10,
+      "timeoutSeconds": 10,
+      "maxConsecutiveFailures": 6,
+      "portIndex": 0
+    }
+  ]
+}
