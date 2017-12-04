@@ -1,7 +1,7 @@
 server {
   listen  80; 
   server_name sample;
-  root /Users/prdhir/tomcat/apache-tomcat-7.0.82/webapps/sample/;
+  root /home/ubuntu/tomcat/apache-tomcat-7.0.82/webapps/sample/;
 
   location / { 
     proxy_set_header X-Forwarded-Host   $host;
