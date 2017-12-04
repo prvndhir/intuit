@@ -74,6 +74,7 @@ function install_nginx {
     sudo systemctl status nginx
     sudo cp "/etc/nginx/sites-enabled/default" /etc/nginx/sites-enabled/default.orig
     sudo cp "${HOME_DIR}/intuit/conf/nginx/default" "/etc/nginx/sites-enabled/default"
+    sudo sed -i -e "s/sites-enabled\/\*/sites-enabled\/default/g" "/etc/nginx/nginx.conf"
     sudo nginx -t
     sudo nginx -s reload
 }
