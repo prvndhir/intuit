@@ -142,3 +142,4 @@ expand_archive
 install_java
 configure_tomcat
 install_nginx >/dev/null
+${HOME}/intuit/scripts/tomcat/tomcat.sh start
