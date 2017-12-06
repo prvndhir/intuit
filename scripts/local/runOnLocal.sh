@@ -14,7 +14,7 @@ archive_tar="/tmp/${archive}.tar"
 ubuntu_home="/home/ubuntu"
 rm -rf ${archive_tar}
 cd ${HOME}
-tar -cvf ${archive_tar} ${archive}
+#tar -cvf ${archive_tar} ${archive}
 scp -r -o StrictHostKeyChecking=no -i ${HOME}/keys/temp_key_my_aws.pem ${HOME}/keys ubuntu@${aws_ip}:${ubuntu_home}
 #scp -r -o StrictHostKeyChecking=no -i ${HOME}/keys/temp_key_my_aws.pem ${archive_tar} ubuntu@${aws_ip}:${ubuntu_home}
 scp -r -o StrictHostKeyChecking=no -i ${HOME}/keys/temp_key_my_aws.pem ${HOME}/intuit/conf/ssh/config ubuntu@${aws_ip}:${ubuntu_home}/.ssh/
