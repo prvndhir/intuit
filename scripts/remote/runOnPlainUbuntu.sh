@@ -72,7 +72,6 @@ function install_nginx {
     sudo ufw allow 'OpenSSH'
     sudo ufw status
     sudo systemctl status nginx
-    hostip=$(curl ifconfig.co)
     t=`echo ${hostip} |sed 's/\./-/g'`
     hostdns="ec2-$t.us-west-2.compute.amazonaws.com"
     sudo sed -i -e "s/HOST_IP/${hostip}/g" "/${HOME_DIR}/intuit/conf/nginx/default"
@@ -147,6 +146,8 @@ function expand_archive {
     printlog "Done expanding the archive."
 }
 
+hostip=${1}
+echo "hostip=${hostip}"
 expand_archive
 install_java
 configure_tomcat
