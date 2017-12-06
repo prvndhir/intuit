@@ -18,3 +18,5 @@ docker run --name sampleapp -d 2b27d32a12b4 -p 9000:9000 prvndhir/sampleapp:late
 ------------------------------------
 DCOS
 ------------------------------------
+dcos marathon app add sampleapp.json
+dcos marathon app remove /netsense-pdhir/sampleapp

@@ -72,6 +72,8 @@ function install_nginx {
     sudo ufw allow 'OpenSSH'
     sudo ufw status
     sudo systemctl status nginx
+    hostip=$(curl ifconfig.co)
+    sudo sed -i -e "s/HOST_IP/${hostip}/g" "/${HOME_DIR}/intuit/conf/nginx/default"
     sudo cp "/etc/nginx/sites-enabled/default" /etc/nginx/sites-enabled/default.orig
     sudo cp "${HOME_DIR}/intuit/conf/nginx/default" "/etc/nginx/sites-enabled/default"
     sudo sed -i -e "s/sites-enabled\/\*/sites-enabled\/default/g" "/etc/nginx/nginx.conf"

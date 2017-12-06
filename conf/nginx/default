@@ -1,6 +1,11 @@
 server {
+    listen 80;
+    server_name HOST_IP;
+    return 403;
+}
+server {
   listen  80; 
-  server_name sample;
+  server_name _;
   root /home/ubuntu/tomcat/apache-tomcat-7.0.82/webapps/sample/;
 
   location / { 
