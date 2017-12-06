@@ -75,7 +75,7 @@ function install_nginx {
     t=`echo ${hostip} |sed 's/\./-/g'`
     hostdns="ec2-$t.us-west-2.compute.amazonaws.com"
     sudo sed -i -e "s/HOST_IP/${hostip}/g" "/${HOME_DIR}/intuit/conf/nginx/default"
-    sudo sed -i -e "s/HOST_DNS/${hostip}/g" "/${HOME_DIR}/intuit/conf/nginx/default"
+    sudo sed -i -e "s/HOST_DNS/${hostdns}/g" "/${HOME_DIR}/intuit/conf/nginx/default"
     sudo cp "/etc/nginx/sites-enabled/default" "/tmp/default.orig"
     sudo cp "${HOME_DIR}/intuit/conf/nginx/default" "/etc/nginx/sites-enabled/default"
     sudo cp "/etc/nginx/nginx.conf" "/tmp/nginx.conf.orig"
