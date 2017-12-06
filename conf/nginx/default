@@ -5,7 +5,7 @@ server {
 }
 server {
   listen  80; 
-  server_name _;
+  server_name HOST_DNS;
   root /home/ubuntu/tomcat/apache-tomcat-7.0.82/webapps/sample/;
 
   location / { 

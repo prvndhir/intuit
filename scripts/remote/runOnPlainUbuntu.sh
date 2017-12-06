@@ -73,10 +73,15 @@ function install_nginx {
     sudo ufw status
     sudo systemctl status nginx
     hostip=$(curl ifconfig.co)
+    t=`echo ${hostip} |sed 's/\./-/g'`
+    hostdns="ec2-$t.us-west-2.compute.amazonaws.com"
     sudo sed -i -e "s/HOST_IP/${hostip}/g" "/${HOME_DIR}/intuit/conf/nginx/default"
-    sudo cp "/etc/nginx/sites-enabled/default" /etc/nginx/sites-enabled/default.orig
+    sudo sed -i -e "s/HOST_DNS/${hostip}/g" "/${HOME_DIR}/intuit/conf/nginx/default"
+    sudo cp "/etc/nginx/sites-enabled/default" "/tmp/default.orig"
     sudo cp "${HOME_DIR}/intuit/conf/nginx/default" "/etc/nginx/sites-enabled/default"
+    sudo cp "/etc/nginx/nginx.conf" "/tmp/nginx.conf.orig"
     sudo sed -i -e "s/sites-enabled\/\*/sites-enabled\/default/g" "/etc/nginx/nginx.conf"
+    sudo sed -i -e "s/# server_names_hash_bucket_size 64/server_names_hash_bucket_size 1024/g"  "/etc/nginx/nginx.conf"
     sudo nginx -t
     sudo nginx -s reload
 }
