@@ -5,7 +5,6 @@ echo "JAVA_HOME=$JAVA_HOME"
 echo "CATALINA_HOME=$CATALINA_HOME"
 echo "PATH=$PATH"
 echo "CATALINA_OPTS=$CATALINA_OPTS"
-echo "HUDSON_HOME=$HUDSON_HOME"
 
 if [ "${1}" = "start" ]; then
     $CATALINA_HOME/bin/startup.sh -Dproduction=false
