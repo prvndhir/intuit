@@ -113,7 +113,7 @@ function install_java {
 #
 #}
 function expand_archive {
-    wget -quiet https://s3-us-west-2.amazonaws.com/prvndhirsampleapp/archive.tar -P ${HOME_DIR}
+    wget https://s3-us-west-2.amazonaws.com/prvndhirsampleapp/archive.tar -P ${HOME_DIR}
     check_file "${archive}"
     printlog "Please wait, expanding the archive(may take up to 2 minutes)..."
     cd ${HOME_DIR};tar -xvf ${archive} >/dev/null
