@@ -51,20 +51,6 @@ function install_docker {
     su - ${USER}
 }
 
-function install_ufw {
-    sudo apt-get -qqy update
-    sudo apt-get -qqy install ufw
-    sudo ufw default deny incoming
-    sudo ufw default allow outgoing
-    sudo ufw allow ssh
-    sudo ufw allow 22
-    sudo ufw allow 80
-    sudo ufw allow 443
-    sudo ufw allow 9000
-    sudo ufw allow 'Nginx HTTP'
-    sudo ufw allow 'OpenSSH'
-    sudo ufw status
-}
 function install_nginx {
     sudo apt-get -qqy update
     sudo apt-get -qqy install nginx
@@ -92,7 +78,6 @@ function configure_tomcat {
     CATALINA_HOME="${tomcat_dir}"
     backup_file "${tomcat_dir}/conf/server.xml"
     copy_file "${HOME_DIR}/intuit/conf/tomcat/server.xml" "${tomcat_dir}/conf/server.xml"
-    printlog "Run >  sh \${HOME}/intuit/scripts/tomcat/tomcat.sh start"
 }
 #
 ## Install java from gz file
