@@ -1,0 +1,39 @@
+{
+  "id": "/netsense-pdhir/logstash",
+  "instances": 1,
+  "cpus": 1,
+  "mem": 2000,
+  "env": {
+    "protocol": "udp",
+    "elastic_search": "vpc-prvndhir-6mzfg5xagz6ueefdnli3enrokq.us-west-2.es.amazonaws.com"
+  },
+  "container": {
+    "docker": {
+      "image": "prvndhir/logstash:latest",
+      "forcePullImage": false,
+      "privileged": false,
+      "portMappings": [
+        {
+          "containerPort": 12201,
+          "protocol": "udp",
+          "labels": {
+            "VIP_0": "/netsense-pdhirlogstash:12201"
+          }
+        }
+      ],
+      "network": "BRIDGE"
+    }
+  },
+  "healthChecks": [
+    {
+      "gracePeriodSeconds": 0,
+      "intervalSeconds": 10,
+      "timeoutSeconds": 10,
+      "maxConsecutiveFailures": 80,
+      "protocol": "COMMAND",
+      "command": {
+        "value": "        date; ps -1 | tail -n 1"
+      }
+    }
+  ]
+}

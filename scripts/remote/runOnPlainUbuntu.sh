@@ -130,7 +130,17 @@ function expand_archive {
     printlog "Done copying APP war."
     printlog "Done expanding the archive."
 }
-
+########################################################################
+# Installs datadog agent and configures it for cassandra monitoring
+#######################################################################
+function install_datadog {
+    printlog "DD_API_KEY=6a97f336ea25cee4931459f97f832555 EC2_TAGS=yes DD_TAGS=tomcat-nginx-sampleapp bash -c \"$(curl -L https://raw.githubusercontent.com/DataDog/dd-agent/master/packaging/datadog-agent/source/install_agent.sh)\""
+    DD_API_KEY=6a97f336ea25cee4931459f97f832555 EC2_TAGS=yes DD_TAGS=tomcat-nginx-sampleapp bash -c "$(curl -L https://raw.githubusercontent.com/DataDog/dd-agent/master/packaging/datadog-agent/source/install_agent.sh)"
+    printlog "sudo /etc/init.d/datadog-agent stop"
+    sudo /etc/init.d/datadog-agent stop
+    sudo cp /etc/dd-agent/conf.d/tomcat.yaml.example  /etc/dd-agent/conf.d/tomcat.yaml
+    sudo /etc/init.d/datadog-agent start
+}
 hostip=${1}
 echo "hostip=${hostip}"
 expand_archive
@@ -138,3 +148,4 @@ install_java
 configure_tomcat
 install_nginx
 ${HOME}/intuit/scripts/tomcat/tomcat.sh start
+install_datadog

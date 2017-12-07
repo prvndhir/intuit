@@ -19,6 +19,7 @@ docker run --name sampleapp -d -p 9000:8080 prvndhir/sampleapp:latest
 DCOS
 ------------------------------------
 dcos marathon app add sampleapp.json
+dcos marathon app add logstash.json
 dcos marathon app remove /netsense-pdhir/sampleapp
 
 ------------------------------------

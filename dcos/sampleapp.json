@@ -15,7 +15,13 @@
           "protocol": "tcp"
         }
       ],
-      "network": "BRIDGE"
+      "network": "BRIDGE",
+      "parameters": [
+        { "key": "log-driver", "value": "gelf" },
+        { "key": "log-opt", "value": "gelf-address=udp://netsense-pdhirlogstash.marathon.l4lb.thisdcos.directory:12201" },
+        { "key": "log-opt", "value": "tag=netsense-pdhir_sampleapp" },
+        { "key": "log-opt", "value": "labels=sampleapp" }
+      ]
     }
   },
   "labels": {
