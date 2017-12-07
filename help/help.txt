@@ -13,10 +13,20 @@ terraform destroy -input=false
 Docker
 ------------------------------------
 docker build --rm -t prvndhir/sampleapp:latest .
-docker run --name sampleapp -d 2b27d32a12b4 -p 9000:9000 prvndhir/sampleapp:latest
+docker run --name sampleapp -d -p 9000:8080 prvndhir/sampleapp:latest
 
 ------------------------------------
 DCOS
 ------------------------------------
 dcos marathon app add sampleapp.json
 dcos marathon app remove /netsense-pdhir/sampleapp
+
+------------------------------------
+Jenkins
+------------------------------------
+Jenkins HOME is /Users/Shared/Jenkins/Home/
+------------------------------------
+Remove Jenkins
+------------------------------------
+sudo launchctl unload /Library/LaunchDaemons/org.jenkins-ci.plist
+sudo rm -rf /Users/Shared/Jenkins
